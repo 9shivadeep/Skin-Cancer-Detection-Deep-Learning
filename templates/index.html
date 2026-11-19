@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skin Cancer Detection System</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f9; text-align: center; padding: 40px; }
+        .card { background: white; max-width: 550px; margin: auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1 { color: #1a365d; }
+        input[type="file"] { margin: 20px 0; }
+        button { background: #2b6cb0; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #2c5282; }
+        .result { margin-top: 25px; padding: 15px; background: #ebf8ff; border-radius: 8px; text-align: left; }
+        .bar { background: #cbd5e0; border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+        .fill { background: #3182ce; color: white; padding: 4px 8px; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Skin Cancer Detection (Deep Learning)</h1>
+        <p>Ensemble Model: <b>ResNet-18 + MobileNetV2</b></p>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required><br>
+            <button type="submit">Analyze Skin Lesion</button>
+        </form>
+
+        {% if prediction %}
+        <div class="result">
+            <h3>Predicted Class: <span style="color:#2b6cb0;">{{ prediction }}</span></h3>
+            <p><b>Top Confidence Scores:</b></p>
+            {% for label, prob in top_probs %}
+                <div>{{ label }} ({{ prob }}%)</div>
+                <div class="bar"><div class="fill" style="width: {{ prob }}%;">{{ prob }}%</div></div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
